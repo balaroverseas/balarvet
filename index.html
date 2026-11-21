@@ -666,6 +666,17 @@
     }
     @media(max-width:380px){.logo-img{height:26px}}
     @media(prefers-reduced-motion:reduce){.wa-float::before{animation:none}}
+    /* ---- Touch targets + iOS no-zoom inputs ---- */
+    .topbar a,.info-item a,.ft-link,.footer-mail,.logo-link,.footer-links a{position:relative}
+    .topbar a::after,.info-item a::after,.ft-link::after,.footer-mail::after,.logo-link::after{content:'';position:absolute;inset:-11px -6px}
+    .footer-links a{display:inline-block}
+    .footer-links a::after{content:'';position:absolute;inset:-8px -6px}
+    @media(max-width:900px){
+      .form-group input,.form-group select,.form-group textarea{font-size:16px}
+      .footer-links{gap:16px}
+      .nav a,header nav a{min-height:48px;display:flex;align-items:center}
+    }
+    @media(max-width:900px){header nav a{padding:10px 4px}header nav a.btn-nav{padding:14px}}
   </style>
 </head>
 <body>
