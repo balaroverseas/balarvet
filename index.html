@@ -677,6 +677,12 @@
       .nav a,header nav a{min-height:48px;display:flex;align-items:center}
     }
     @media(max-width:900px){header nav a{padding:10px 4px}header nav a.btn-nav{padding:14px}}
+    /* ---- Quote form status ---- */
+    .form-status{display:none;margin-top:16px;padding:14px 16px;border-radius:10px;font-size:14.5px;line-height:1.55}
+    .form-status.ok{display:block;background:#EEF3DC;border:1px solid #B9C78A;color:#33440F}
+    .form-status.err{display:block;background:#FDECEC;border:1px solid #F1B5B5;color:#8A1F1F}
+    .form-status a{color:inherit;font-weight:700;text-decoration:underline}
+    .form-actions .btn-primary:disabled{opacity:.7;cursor:progress;transform:none}
   </style>
 </head>
 <body>
@@ -1073,11 +1079,13 @@
             <label for="message">Message</label>
             <textarea id="message" placeholder="Sizes / gauges, packaging, private label, timeline…"></textarea>
           </div>
+          <input type="text" name="_honey" id="honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0">
           <div class="form-actions">
-            <button type="button" class="btn-primary" id="sendWhatsApp"><svg class="wa-i" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-ic"/></svg>Send on WhatsApp</button>
-            <button type="submit" class="btn-secondary">Send by email</button>
+            <button type="submit" class="btn-primary" id="sendBtn">Send inquiry</button>
+            <button type="button" class="btn-secondary" id="sendWhatsApp"><svg class="wa-i" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-ic"/></svg>Send on WhatsApp</button>
           </div>
-          <p class="form-note">Your inquiry opens in WhatsApp or your email app, ready to send.</p>
+          <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+          <p class="form-note">Your inquiry goes straight to our export desk. Prefer chat? Use WhatsApp.</p>
         </form>
       </div>
     </div>
@@ -1265,9 +1273,32 @@
     document.getElementById('sendWhatsApp').addEventListener('click',function(){
       window.open('https://wa.me/919898977266?text='+encodeURIComponent(buildInquiry()),'_blank','noopener');
     });
+    // Quote form: sends straight to info@balarvet.com through FormSubmit (no backend needed)
+    var FORM_ENDPOINT='https://formsubmit.co/ajax/info@balarvet.com';
     document.getElementById('quoteForm').addEventListener('submit',function(e){
       e.preventDefault();
-      window.location.href='mailto:info@balarvet.com?subject='+encodeURIComponent('Quote request — '+(document.getElementById('name').value||'BalarVet inquiry'))+'&body='+encodeURIComponent(buildInquiry());
+      var f=this,btn=document.getElementById('sendBtn'),st=document.getElementById('formStatus');
+      if(document.getElementById('honey').value){return;}
+      var v=function(id){return document.getElementById(id).value.trim();};
+      var payload={
+        name:v('name'),company:v('company'),email:v('email'),
+        'US port / state':v('country'),product:v('grade'),quantity:v('quantity'),message:v('message'),
+        _subject:'BalarVet quote request - '+(v('company')||v('name')),_template:'table',_captcha:'false'
+      };
+      var label=btn.textContent;btn.disabled=true;btn.textContent='Sending…';st.className='form-status';st.textContent='';
+      fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})
+        .then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});})
+        .then(function(x){
+          if(!(x.ok&&(x.j.success===true||x.j.success==='true')))throw new Error('send failed');
+          f.reset();st.className='form-status ok';
+          st.textContent='Thank you! Your inquiry has been sent. We will reply within one business day.';
+        })
+        .catch(function(){
+          st.className='form-status err';
+          var href='mailto:info@balarvet.com?subject='+encodeURIComponent('Quote request - '+(v('name')||'BalarVet inquiry'))+'&body='+encodeURIComponent(buildInquiry());
+          st.innerHTML='Sorry, we could not send your inquiry. Please <a href="'+href+'">email us at info@balarvet.com</a> or use WhatsApp.';
+        })
+        .then(function(){btn.disabled=false;btn.textContent=label;});
     });
   </script>
 </body>
