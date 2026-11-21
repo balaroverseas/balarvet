@@ -598,9 +598,78 @@
     .to-top.go{animation:ttGo .9s cubic-bezier(.5,0,.3,1)}
     @keyframes ttGo{0%{transform:translateY(0)}35%{transform:translateY(8px)}70%{transform:translateY(-70px);opacity:.2}100%{transform:translateY(0);opacity:1}}
     @media(prefers-reduced-motion:reduce){.to-top,.tt-ring,.to-top.go,.to-top:hover .tt-drop{animation:none!important}}
+    /* ===================== Logo sizing + mobile polish ===================== */
+    .logo-link{display:flex;align-items:center;flex-shrink:0}
+    .logo-img{height:40px;width:auto;max-width:none;display:block}
+    .footer-logo{height:44px;width:auto;max-width:100%}
+    .menu-btn{display:none;position:relative;width:44px;height:44px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;flex-shrink:0;padding:0}
+    .menu-btn span{position:absolute;left:12px;right:12px;height:2.4px;border-radius:2px;background:var(--olive);transition:transform .3s,opacity .2s,top .3s}
+    .menu-btn span:nth-child(1){top:14px}.menu-btn span:nth-child(2){top:20.8px}.menu-btn span:nth-child(3){top:27.6px}
+    .menu-btn.open span:nth-child(1){top:20.8px;transform:rotate(45deg)}
+    .menu-btn.open span:nth-child(2){opacity:0}
+    .menu-btn.open span:nth-child(3){top:20.8px;transform:rotate(-45deg)}
+    /* WhatsApp */
+    .wa-i{width:18px;height:18px;fill:currentColor;vertical-align:-3px;margin-right:8px;flex-shrink:0}
+    .btn-primary .wa-i{margin-right:0}
+    .wa-float{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;align-items:center;justify-content:center;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;box-shadow:0 10px 24px rgba(0,0,0,.28);text-decoration:none;transition:transform .3s cubic-bezier(.3,1.5,.5,1),opacity .3s,box-shadow .3s}
+    .wa-float svg{width:32px;height:32px;fill:#fff}
+    .wa-float::before{content:'';position:absolute;inset:0;border-radius:50%;background:#25D366;opacity:.55;animation:waPulse 2.4s ease-out infinite;z-index:-1}
+    @keyframes waPulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.7);opacity:0}}
+    .wa-tip{position:absolute;right:68px;top:50%;transform:translate(8px,-50%);background:#fff;color:var(--ink);font-weight:700;font-size:13.5px;padding:9px 14px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 20px rgba(0,0,0,.18);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+    .wa-float:hover{transform:translateY(-4px) scale(1.06);box-shadow:0 16px 30px rgba(0,0,0,.35)}
+    .wa-float:hover .wa-tip{opacity:1;transform:translate(0,-50%)}
+    .wa-float.hide{opacity:0;pointer-events:none;transform:scale(.7)}
+    @media(max-width:1100px){.logo-img{height:34px}}
+    @media(max-width:900px){
+      .menu-btn{display:block}
+      header .wrap{flex-wrap:nowrap;gap:12px;padding:10px 18px}
+      .logo-img{height:30px}
+      header nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;padding:6px 20px 20px;background:rgba(255,255,255,.98);backdrop-filter:blur(10px);border-bottom:2px solid var(--yellow);box-shadow:0 18px 30px rgba(47,49,32,.14);font-size:16px;flex-wrap:nowrap}
+      header nav.open{display:flex;animation:navDrop .25s ease-out}
+      @keyframes navDrop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+      header nav a{padding:15px 4px;border-bottom:1px solid var(--line)}
+      header nav a.btn-nav{display:flex!important;justify-content:center;margin-top:16px;padding:14px;border-bottom:none;border-radius:999px}
+      body.menu-open{overflow:hidden}
+      .hero{padding-top:44px}
+    }
+    @media(max-width:600px){
+      .logo-img{height:28px}
+      .footer-logo{height:36px}
+      .topbar{font-size:12px;padding:8px 0}
+      .topbar .wrap{justify-content:center;text-align:center}
+      .topbar .wrap span:last-child{display:none}
+      .hero h1{font-size:clamp(28px,8vw,34px)}
+      .hero p{font-size:16px}
+      .hero-btns .btn-primary,.hero-btns .btn-secondary{flex:1 1 100%;justify-content:center;text-align:center}
+      .hero-checks{gap:10px 16px}
+      .section{padding:54px 0}
+      .sec-head{margin-bottom:30px}
+      /* catalog tabs: one swipeable row */
+      .tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -24px;padding:0 24px}
+      .tabs::-webkit-scrollbar{display:none}
+      .tab{white-space:nowrap;flex-shrink:0;padding:12px 16px}
+      .panel h3{font-size:20px}
+      .why-card{padding:22px 20px;gap:14px}
+      .quote-form{padding:22px 18px}
+      .form-actions .btn-primary,.form-actions .btn-secondary{min-width:100%}
+      .pl{padding:30px 22px;border-radius:16px}
+      .ft-cta{padding-bottom:36px;margin-bottom:36px}
+      .ft-cta-btns{gap:16px}
+      .ft-btn{width:100%;justify-content:center}
+      .footer-bottom{flex-direction:column;align-items:flex-start;gap:10px}
+      .to-top{position:absolute;right:0;top:-6px}
+      .footer-bottom{position:relative;padding-right:70px}
+      .wa-float{right:14px;bottom:14px;width:54px;height:54px}
+      .wa-float svg{width:30px;height:30px}
+      .wa-tip{display:none}
+      .ship-badge strong{font-size:13.5px}
+    }
+    @media(max-width:380px){.logo-img{height:26px}}
+    @media(prefers-reduced-motion:reduce){.wa-float::before{animation:none}}
   </style>
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="wa-ic" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol></defs></svg>
 
   <!-- Top bar -->
   <div class="topbar">
@@ -613,14 +682,15 @@
   <!-- Header -->
   <header id="siteHeader">
     <div class="wrap">
-      <a href="#top"><img src="images/logo.png" alt="BalarVet" class="logo-img" width="345" height="46"></a>
-      <nav>
+      <a href="#top" class="logo-link" aria-label="BalarVet home"><img src="images/logo.png" alt="BalarVet" class="logo-img" width="300" height="40"></a>
+      <nav id="siteNav" aria-label="Main">
         <a href="#products">Products</a>
         <a href="#applications">Who we supply</a>
         <a href="#why">Why BalarVet</a>
         <a href="#export">How we export</a>
         <a href="#quote" class="btn-nav">Request a quote</a>
       </nav>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="siteNav"><span></span><span></span><span></span></button>
     </div>
   </header>
 
@@ -944,7 +1014,7 @@
           <div class="info-block">
             <h3>Reach us directly</h3>
             <div class="info-item"><strong>Email</strong><a href="mailto:info@balarvet.com">info@balarvet.com</a></div>
-            <div class="info-item"><strong>WhatsApp</strong><a href="https://wa.me/919898977266" target="_blank" rel="noopener">+91 98989 77266</a></div>
+            <div class="info-item"><strong>WhatsApp</strong><a href="https://wa.me/919898977266" target="_blank" rel="noopener"><svg class="wa-i" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-ic"/></svg>+91 98989 77266</a></div>
             <div class="info-item"><strong>Location</strong><span>Surat, Gujarat, India</span></div>
           </div>
           <div class="info-block">
@@ -993,7 +1063,7 @@
             <textarea id="message" placeholder="Sizes / gauges, packaging, private label, timeline…"></textarea>
           </div>
           <div class="form-actions">
-            <button type="button" class="btn-primary" id="sendWhatsApp">Send on WhatsApp</button>
+            <button type="button" class="btn-primary" id="sendWhatsApp"><svg class="wa-i" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-ic"/></svg>Send on WhatsApp</button>
             <button type="submit" class="btn-secondary">Send by email</button>
           </div>
           <p class="form-note">Your inquiry opens in WhatsApp or your email app, ready to send.</p>
@@ -1014,7 +1084,7 @@
         <div class="ft-cta-text">
           <h2>Ready to stock <span>BalarVet</span> syringes &amp; needles?</h2>
           <p>Share your sizes and volumes. We reply within one business day.</p>
-          <div class="ft-cta-btns"><a href="#quote" class="ft-btn">Request a quote</a><a href="https://wa.me/919898977266" target="_blank" rel="noopener" class="ft-link">Chat on WhatsApp →</a></div>
+          <div class="ft-cta-btns"><a href="#quote" class="ft-btn">Request a quote</a><a href="https://wa.me/919898977266" target="_blank" rel="noopener" class="ft-link"><svg class="wa-i" viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-ic"/></svg>Chat on WhatsApp →</a></div>
         </div>
         <svg class="ft-syr" viewBox="0 0 300 70" aria-hidden="true" style="--tx:65px;--dur:9s"><rect x="84" y="12" width="140" height="46" rx="9" fill="none" stroke="#fff" stroke-width="4"/><rect class="pv-liq" x="98" y="19" width="118" height="32" rx="6" fill="#FFDF5C"/><rect x="74" y="4" width="10" height="62" rx="3" fill="#fff"/><g class="pv-plg"><rect x="90" y="17" width="8" height="36" rx="2" fill="#fff"/><path d="M11 35H90" stroke="#fff" stroke-width="6"/><rect x="2" y="20" width="9" height="30" rx="3" fill="#fff"/></g><rect x="224" y="26" width="22" height="18" rx="4" fill="#FFDF5C"/><path d="M246 35H296L290 33.5V36.5Z" fill="#fff"/><path d="M120 12v10M137 12v7M154 12v10M171 12v7M188 12v10M205 12v7" stroke="#fff" stroke-width="2.5"/><circle class="pv-drop" cx="293" cy="39" r="3" fill="#FFDF5C"/></svg>
       </div>
@@ -1059,6 +1129,8 @@
       </div>
     </div>
   </footer>
+
+  <a class="wa-float" id="waFloat" href="https://wa.me/919898977266?text=Hello%20BalarVet%2C%20I%20would%20like%20a%20quote%20for%20veterinary%20syringes%20%26%20needles." target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#wa-ic"/></svg><span class="wa-tip">Chat on WhatsApp</span></a>
 
   <script>
     // Scroll reveal
@@ -1139,6 +1211,26 @@
 
     // Back-to-top: little launch animation on click
     (function(){var b=document.querySelector('.to-top');if(!b)return;b.addEventListener('click',function(){b.classList.remove('go');void b.offsetWidth;b.classList.add('go');setTimeout(function(){b.classList.remove('go')},950)})})();
+
+
+    // Mobile menu
+    (function(){
+      var btn=document.getElementById('menuBtn'),nav=document.getElementById('siteNav'),hdr=document.getElementById('siteHeader');
+      if(!btn||!nav)return;
+      function set(o){nav.classList.toggle('open',o);btn.classList.toggle('open',o);btn.setAttribute('aria-expanded',o);btn.setAttribute('aria-label',o?'Close menu':'Open menu');document.body.classList.toggle('menu-open',o)}
+      btn.addEventListener('click',function(){set(!nav.classList.contains('open'))});
+      nav.addEventListener('click',function(e){if(e.target.closest('a'))set(false)});
+      document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+      document.addEventListener('click',function(e){if(nav.classList.contains('open')&&!hdr.contains(e.target))set(false)});
+      window.addEventListener('resize',function(){if(window.innerWidth>900)set(false)});
+    })();
+
+    // WhatsApp float: hide while the footer is on screen (back-to-top lives there)
+    (function(){
+      var w=document.getElementById('waFloat'),f=document.querySelector('footer');
+      if(!w||!f||!('IntersectionObserver' in window))return;
+      new IntersectionObserver(function(en){w.classList.toggle('hide',en[0].isIntersecting)},{threshold:.15}).observe(f);
+    })();
 
     // Header shadow on scroll
     var hdr=document.getElementById('siteHeader');
